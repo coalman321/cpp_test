@@ -10,5 +10,9 @@
 Drivetrain::Drivetrain() {}
 
 DriveSignal Drivetrain::arcadeDrive(double xVel, double rVel){
+    double maxInput = std::max(std::max(std::abs(xVel - rVel), std::abs(xVel + rVel)), 1.0);
+    double rightMotorOutput = (xVel + rVel) / maxInput;
+    double leftMotorOutput = (xVel - rVel) / maxInput;
 
+    return DriveSignal(rightMotorOutput, leftMotorOutput);
 }

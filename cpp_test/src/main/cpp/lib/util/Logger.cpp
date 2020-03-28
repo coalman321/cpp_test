@@ -5,16 +5,6 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
-#include <lib/util/DriveSignal.h>
-#include <cmath>
-#include <algorithm>
+#include "lib/util/Logger.h"
 
-class Drivetrain {
-  DriveSignal arcadeDrive(double xVel, double rVel);
- public:
-  Drivetrain();
-  void setOpenLoop(DriveSignal signal);
-  void setVelocityControl(DriveSignal signal);
-  
-};
+Logger::Logger() {}

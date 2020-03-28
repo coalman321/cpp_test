@@ -6,9 +6,21 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
+#include <mutex>
+#include <vector>
+#include <cmath>
+#include <algorithm>
 
 class SynchronousPIDF {
+ protected:
   double kp = 0, ki = 0, kd = 0, kf = 0, iMax = 0, timeDelta = 0.010;
+  double error = 0, lastError = 0, derivative = 0, integral = 0, inputRange = 0, setPoint = 0;
+  bool continuous = false, enabled = false;
+  std::mutex calculationMutex;
+
+  double getContinuousError(double error);
+  double clamp(double input, double lower, double upper);
+
  public:
   SynchronousPIDF(double p, double i, double d, double f){
     kp = p, ki = i, kd = d, kf = f;
@@ -18,6 +30,14 @@ class SynchronousPIDF {
     kp = p, ki = i, kd = d, kf = f, iMax = iLim, timeDelta = dt;
   }
   
-  void setContinuous();
-  void 
+  void reset();
+  void setContinuous(bool continous);
+  void setInputRange(double lower, double upper);
+  void updateSetPoint(double set);
+  void setPIDF(double kP, double kI, double kD, double kF);
+
+  double update(double input);
+
+  std::vector<double> getPIF();
+  double getError();
 };
