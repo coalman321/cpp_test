@@ -11,6 +11,11 @@
 
 #include <wpi/json.h>
 
+Rotation2d::Rotation2d()
+    : m_value(0_rad),
+      m_cos(units::math::cos(0_rad)),
+      m_sin(units::math::sin(0_rad)) {}
+
 Rotation2d::Rotation2d(units::radian_t value)
     : m_value(value),
       m_cos(units::math::cos(value)),

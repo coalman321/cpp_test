@@ -6,8 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
+#include <string>
 
 class CSVWritable {
  public:
   CSVWritable();
+  virtual std::string toCSV();
+  virtual int getNumFields();
 };

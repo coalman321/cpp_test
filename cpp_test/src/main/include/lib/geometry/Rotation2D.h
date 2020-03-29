@@ -8,6 +8,7 @@
 #pragma once
 
 #include <units/units.h>
+#include <lib/util/CSVWritable.h>
 
 namespace wpi {
 class json;
@@ -19,12 +20,12 @@ class json;
  * A rotation in a 2d coordinate frame represented a point on the unit circle
  * (cosine and sine).
  */
-class Rotation2d {
+class Rotation2d : public CSVWritable{
  public:
   /**
    * Constructs a Rotation2d with a default angle of 0 degrees.
    */
-  constexpr Rotation2d() = default;
+  Rotation2d();
 
   /**
    * Constructs a Rotation2d with the given radian value.
@@ -139,6 +140,15 @@ class Rotation2d {
   Rotation2d RotateBy(const Rotation2d& other) const;
 
   /**
+   * The inverse of a Rotation2d "undoes" the effect of this rotation.
+   *
+   * @return The opposite of this rotation.
+   */
+  Rotation2d inverse() {
+    return Rotation2d(m_cos, -m_sin);
+  }
+
+  /**
    * Returns the radian value of the rotation.
    *
    * @return The radian value of the rotation.
@@ -172,6 +182,16 @@ class Rotation2d {
    * @return The tangent of the rotation.
    */
   double Tan() const { return m_sin / m_cos; }
+
+  int getNumFields(){
+    return 1;
+  }
+
+  std::string toCSV(){
+    return std::to_string((double)Degrees());
+  }
+
+  
 
  private:
   units::radian_t m_value = 0_deg;

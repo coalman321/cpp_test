@@ -14,6 +14,7 @@
 #include <ctre/Phoenix.h>
 #include <Constants.h>
 #include <lib/geometry/Rotation2D.h>
+#include <lib/control/SynchronousPIDF.h>
 
 enum DriveControlMode{OPEN_LOOP, PATH_FOLLOWING, HEADING_CONTROL, POSE_STABILIZE};
 
@@ -24,9 +25,12 @@ class Drivetrain : public Subsystem{
   std::unique_ptr<PigeonIMU> imu;
 
   double leftTicks, rightTicks; 
-  Rotation2d heading;
+  Rotation2d heading, gyroOffset;
+
+  std::unique_ptr<SynchronousPIDF> headingController;
   
   DriveControlMode controlMode;
+  double leftDemand = 0, rightDemand = 0;
 
  public:
   Drivetrain();
@@ -37,4 +41,5 @@ class Drivetrain : public Subsystem{
   void setOpenLoop(DriveSignal signal);
   void setVelocityControl(DriveSignal signal);
   units::degree_t getHeading();
+  void setHeading(Rotation2d desiredHeading);
 };

@@ -11,6 +11,9 @@
 #include <cmath>
 #include <algorithm>
 
+/**
+ * A synchronous, thread safe, PIDF controller implementation
+ */
 class SynchronousPIDF {
  protected:
   double kp = 0, ki = 0, kd = 0, kf = 0, iMax = 0, timeDelta = 0.010;
@@ -22,6 +25,9 @@ class SynchronousPIDF {
   double clamp(double input, double lower, double upper);
 
  public:
+  /**
+   *constructs a new pidf with the specified gains 
+   */
   SynchronousPIDF(double p, double i, double d, double f){
     kp = p, ki = i, kd = d, kf = f;
   }
@@ -35,6 +41,7 @@ class SynchronousPIDF {
   void setInputRange(double lower, double upper);
   void updateSetPoint(double set);
   void setPIDF(double kP, double kI, double kD, double kF);
+  void setILim(double limit){iMax = limit;};
 
   double update(double input);
 

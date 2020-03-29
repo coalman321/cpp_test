@@ -8,3 +8,11 @@
 #include "lib/util/CSVWritable.h"
 
 CSVWritable::CSVWritable() {}
+
+int CSVWritable::getNumFields(){
+    return 0;
+}
+
+std::string CSVWritable::toCSV(){
+    return "";
+}
