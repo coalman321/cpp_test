@@ -9,6 +9,9 @@
 
 
 class Subsystem {
- public:
-  Subsystem();
+  public:
+    Subsystem();
+    virtual void readPeriodicInputs();
+    virtual void onLoop();
+    virtual void writePeriodicOutputs();
 };

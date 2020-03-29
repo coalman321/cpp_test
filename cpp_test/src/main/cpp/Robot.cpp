@@ -7,19 +7,43 @@
 
 #include "Robot.h"
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+    std::vector<Subsystem*> subsystems{&drivetrain, &arm};
+    manager = std::make_unique<SubsystemManager>(subsystems);
+}
+
 void Robot::RobotPeriodic() {}
 
-void Robot::AutonomousInit() {}
+void Robot::AutonomousInit() {
+    manager -> stopDisabledLoop();
+    
+    manager -> startEnabledLoop();
+}
+
 void Robot::AutonomousPeriodic() {}
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+    manager -> stopDisabledLoop();
+    
+    manager -> startEnabledLoop();
+}
+
 void Robot::TeleopPeriodic() {}
 
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+    manager -> stopEnabledLoop();
+
+    manager -> startDisabledLoop();
+}
+
 void Robot::DisabledPeriodic() {}
 
-void Robot::TestInit() {}
+void Robot::TestInit() {
+    manager -> stopDisabledLoop();
+    
+    manager -> startEnabledLoop();
+}
+
 void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS

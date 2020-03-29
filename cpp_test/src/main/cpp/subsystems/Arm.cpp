@@ -10,3 +10,15 @@
 Arm::Arm() {
     
 }
+
+void Arm::readPeriodicInputs(){
+
+}
+
+void Arm::onLoop(){
+    
+}
+
+void Arm::writePeriodicOutputs(){
+    
+}

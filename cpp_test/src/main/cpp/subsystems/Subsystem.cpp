@@ -8,3 +8,9 @@
 #include "subsystems/Subsystem.h"
 
 Subsystem::Subsystem() {}
+
+void Subsystem::readPeriodicInputs(){}
+
+void Subsystem::onLoop(){}
+
+void Subsystem::writePeriodicOutputs(){}

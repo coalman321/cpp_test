@@ -9,6 +9,18 @@
 
 Drivetrain::Drivetrain() {}
 
+void Drivetrain::readPeriodicInputs(){
+    
+}
+
+void Drivetrain::onLoop(){
+    std::printf("hello from drive!\n");
+}
+
+void Drivetrain::writePeriodicOutputs(){
+    
+}
+
 DriveSignal Drivetrain::arcadeDrive(double xVel, double rVel){
     double maxInput = std::max(std::max(std::abs(xVel - rVel), std::abs(xVel + rVel)), 1.0);
     double rightMotorOutput = (xVel + rVel) / maxInput;

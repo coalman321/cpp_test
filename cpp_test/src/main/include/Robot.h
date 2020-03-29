@@ -8,8 +8,18 @@
 #pragma once
 
 #include <frc/TimedRobot.h>
+#include <SubsystemManager.h>
+#include <SubsystemManager.h>
+#include <subsystems/Drivetrain.h>
+#include <subsystems/Arm.h>
+#include <subsystems/Subsystem.h>
+
 
 class Robot : public frc::TimedRobot {
+  std::unique_ptr<SubsystemManager> manager;
+  Drivetrain drivetrain;
+  Arm arm;
+
  public:
   void RobotInit() override;
   void RobotPeriodic() override;

@@ -6,8 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
+#include <subsystems/Subsystem.h>
 
-class Arm {
+class Arm : public Subsystem{
  public:
   Arm();
+  void readPeriodicInputs() override;
+  void onLoop() override;
+  void writePeriodicOutputs() override;
 };
