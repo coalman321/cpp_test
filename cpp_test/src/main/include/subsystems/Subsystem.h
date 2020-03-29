@@ -14,4 +14,5 @@ class Subsystem {
     virtual void readPeriodicInputs();
     virtual void onLoop();
     virtual void writePeriodicOutputs();
+    virtual void reset();
 };

@@ -14,4 +14,5 @@ class Arm : public Subsystem{
   void readPeriodicInputs() override;
   void onLoop() override;
   void writePeriodicOutputs() override;
+  void reset() override;
 };

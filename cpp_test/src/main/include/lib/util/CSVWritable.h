@@ -5,14 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Subsystem.h"
+#pragma once
 
-Subsystem::Subsystem() {}
-
-void Subsystem::readPeriodicInputs(){}
-
-void Subsystem::onLoop(){}
-
-void Subsystem::writePeriodicOutputs(){}
-
-void Subsystem::reset(){}
+class CSVWritable {
+ public:
+  CSVWritable();
+};

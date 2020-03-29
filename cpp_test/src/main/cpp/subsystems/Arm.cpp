@@ -22,3 +22,8 @@ void Arm::onLoop(){
 void Arm::writePeriodicOutputs(){
     
 }
+
+
+void Arm::reset(){
+    
+}

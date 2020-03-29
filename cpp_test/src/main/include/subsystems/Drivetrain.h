@@ -11,14 +11,30 @@
 #include <algorithm>
 #include <subsystems/Subsystem.h>
 #include <cstdio>
+#include <ctre/Phoenix.h>
+#include <Constants.h>
+#include <lib/geometry/Rotation2D.h>
+
+enum DriveControlMode{OPEN_LOOP, PATH_FOLLOWING, HEADING_CONTROL, POSE_STABILIZE};
 
 class Drivetrain : public Subsystem{
   DriveSignal arcadeDrive(double xVel, double rVel);
+
+  std::unique_ptr<TalonSRX> frontLeft, frontRight, rearLeft, rearRight;
+  std::unique_ptr<PigeonIMU> imu;
+
+  double leftTicks, rightTicks; 
+  Rotation2d heading;
+  
+  DriveControlMode controlMode;
+
  public:
   Drivetrain();
   void readPeriodicInputs() override;
   void onLoop() override;
   void writePeriodicOutputs() override;
+  void reset() override;
   void setOpenLoop(DriveSignal signal);
   void setVelocityControl(DriveSignal signal);
+  units::degree_t getHeading();
 };

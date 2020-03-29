@@ -5,14 +5,6 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Subsystem.h"
+#include "lib/util/CSVWritable.h"
 
-Subsystem::Subsystem() {}
-
-void Subsystem::readPeriodicInputs(){}
-
-void Subsystem::onLoop(){}
-
-void Subsystem::writePeriodicOutputs(){}
-
-void Subsystem::reset(){}
+CSVWritable::CSVWritable() {}
