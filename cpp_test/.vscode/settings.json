@@ -99,5 +99,6 @@
     "cinttypes": "cpp",
     "shared_mutex": "cpp",
     "stack": "cpp"
-  }
+  },
+  "C_Cpp.default.configurationProvider": "vscode-wpilib"
 }
