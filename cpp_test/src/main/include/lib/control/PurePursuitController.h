@@ -10,7 +10,7 @@
 #include <lib/geometry/Twist2d.h>
 
 class PurePursuitController {
-    static const double kEpsilon = 1E-9;
+    static const double kEpsilon;
 
     double mFixedLookahead;
     Path mPath;
@@ -29,3 +29,5 @@ class PurePursuitController {
   Twist2d update();
   
 };
+
+const double PurePursuitController::kEpsilon = 1E-9;

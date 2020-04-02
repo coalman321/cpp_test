@@ -7,6 +7,8 @@
 
 #include "lib/geometry/Transform2d.h"
 
+Transform2d::Transform2d(){}
+
 Transform2d::Transform2d(Pose2d initial, Pose2d final) {
   // We are rotating the difference between the translations
   // using a clockwise rotation matrix. This transforms the global

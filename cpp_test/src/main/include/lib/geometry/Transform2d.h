@@ -7,6 +7,9 @@
 
 #pragma once
 #include <lib/geometry/Pose2d.h>
+#include <lib/geometry/Rotation2D.h>
+#include <lib/geometry/Twist2d.h>
+#include <lib/geometry/Translation2d.h>
 
 /**
  * Represents a transformation for a Pose2d.
@@ -33,6 +36,13 @@ class Transform2d {
    * Constructs the identity transform -- maps an initial pose to itself.
    */
   Transform2d();
+
+  /**
+   * Returns the inverse of thistransfomation
+   *
+   * @return inverse transform
+   */
+  Transform2d Inverse() const;
 
   /**
    * Returns the translation component of the transformation.

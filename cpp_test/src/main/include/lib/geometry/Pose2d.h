@@ -9,6 +9,7 @@
 #include <lib/geometry/Rotation2D.h>
 #include <lib/geometry/Twist2d.h>
 #include <lib/geometry/Translation2d.h>
+#include <lib/geometry/Transform2d.h>
 
 /**
  * Represents a 2d pose containing translational and rotational elements.
