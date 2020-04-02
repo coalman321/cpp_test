@@ -13,9 +13,10 @@ PurePursuitController::PurePursuitController(double fixed_lookahead, double max_
 }
 
 Twist2d PurePursuitController::update(){
+    return Twist2d();
 
 }
 
 bool PurePursuitController::isDone(){
-
+    return false;
 }

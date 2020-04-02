@@ -7,6 +7,10 @@
 
 #pragma once
 #include <lib/geometry/Pose2d.h>
+#include <lib/geometry/Rotation2D.h>
+#include <lib/geometry/Twist2d.h>
+#include <lib/geometry/Translation2d.h>
+
 /**
  * Represents a translation in 2d space.
  * This object can be used to represent a point or a vector.
