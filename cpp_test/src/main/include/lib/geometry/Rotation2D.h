@@ -7,14 +7,12 @@
 
 #pragma once
 
-#include <units/units.h>
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
 #include <lib/util/CSVWritable.h>
-
-namespace wpi {
-class json;
-}  // namespace wpi
-
-
+#include <cmath>
 
 /**
  * A rotation in a 2d coordinate frame represented a point on the unit circle
@@ -32,7 +30,7 @@ class Rotation2d : public CSVWritable{
    *
    * @param value The value of the angle in radians.
    */
-  Rotation2d(units::radian_t value);  // NOLINT(runtime/explicit)
+  Rotation2d(double radians);  // NOLINT(runtime/explicit)
 
   /**
    * Constructs a Rotation2d with the given x and y (cosine and sine)
@@ -153,14 +151,14 @@ class Rotation2d : public CSVWritable{
    *
    * @return The radian value of the rotation.
    */
-  units::radian_t Radians() const { return m_value; }
+  double Radians() const { return radians; }
 
   /**
    * Returns the degree value of the rotation.
    *
    * @return The degree value of the rotation.
    */
-  units::degree_t Degrees() const { return m_value; }
+  double Degrees() const { return radians * M_PI / 180.0; }
 
   /**
    * Returns the cosine of the rotation.
@@ -188,13 +186,13 @@ class Rotation2d : public CSVWritable{
   }
 
   std::string toCSV(){
-    return std::to_string((double)Degrees());
+    return std::to_string(Degrees());
   }
 
   
 
  private:
-  units::radian_t m_value = 0_deg;
+  double radians = 0;
   double m_cos = 1;
   double m_sin = 0;
 };

@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "lib/geometry/Transform2d.h"
+#include "lib/geometry/Pose2d.h"
 
 Transform2d::Transform2d(Pose2d initial, Pose2d final) {
   // We are rotating the difference between the translations

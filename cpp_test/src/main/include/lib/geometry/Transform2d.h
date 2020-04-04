@@ -6,10 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <lib/geometry/Pose2d.h>
 #include <lib/geometry/Rotation2D.h>
 #include <lib/geometry/Twist2d.h>
 #include <lib/geometry/Translation2d.h>
+
+class Pose2d;
 
 /**
  * Represents a transformation for a Pose2d.

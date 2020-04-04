@@ -6,10 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <lib/geometry/Pose2d.h>
-#include <lib/geometry/Rotation2D.h>
-#include <lib/geometry/Twist2d.h>
-#include <lib/geometry/Translation2d.h>
+
+#include <lib/geometry/Rotation2d.h>
 
 /**
  * Represents a translation in 2d space.
@@ -19,8 +17,9 @@
  * When the robot is placed on the origin, facing toward the X direction,
  * moving forward increases the X, whereas moving to the left increases the Y.
  */
-class Translation2d {
- public:
+class Translation2d
+{
+public:
   /**
    * Constructs a Translation2d with X and Y components equal to zero.
    */
@@ -33,7 +32,7 @@ class Translation2d {
    * @param x The x component of the translation.
    * @param y The y component of the translation.
    */
-  Translation2d(units::meter_t x, units::meter_t y);
+  Translation2d(double x, double y);
 
   /**
    * Calculates the distance between two translations in 2d space.
@@ -45,28 +44,28 @@ class Translation2d {
    *
    * @return The distance between the two translations.
    */
-  units::meter_t Distance(const Translation2d& other) const;
+  double Distance(const Translation2d &other) const;
 
   /**
    * Returns the X component of the translation.
    *
    * @return The x component of the translation.
    */
-  units::meter_t X() const { return m_x; }
+  double X() const { return m_x; }
 
   /**
    * Returns the Y component of the translation.
    *
    * @return The y component of the translation.
    */
-  units::meter_t Y() const { return m_y; }
+  double Y() const { return m_y; }
 
   /**
    * Returns the norm, or distance from the origin to the translation.
    *
    * @return The norm of the translation.
    */
-  units::meter_t Norm() const;
+  double Norm() const;
 
   /**
    * Applies a rotation to the translation in 2d space.
@@ -84,7 +83,9 @@ class Translation2d {
    *
    * @return The new rotated translation.
    */
-  Translation2d RotateBy(const Rotation2d& other) const;
+  Translation2d RotateBy(const Rotation2d &other) const;
+
+  Translation2d interpolate(const Translation2d &other, double x);
 
   /**
    * Adds two translations in 2d space and returns the sum. This is similar to
@@ -97,7 +98,7 @@ class Translation2d {
    *
    * @return The sum of the translations.
    */
-  Translation2d operator+(const Translation2d& other) const;
+  Translation2d operator+(const Translation2d &other) const;
 
   /**
    * Adds the new translation to the current translation.
@@ -109,7 +110,7 @@ class Translation2d {
    *
    * @return The reference to the new mutated object.
    */
-  Translation2d& operator+=(const Translation2d& other);
+  Translation2d &operator+=(const Translation2d &other);
 
   /**
    * Subtracts the other translation from the other translation and returns the
@@ -122,7 +123,7 @@ class Translation2d {
    *
    * @return The difference between the two translations.
    */
-  Translation2d operator-(const Translation2d& other) const;
+  Translation2d operator-(const Translation2d &other) const;
 
   /**
    * Subtracts the new translation from the current translation.
@@ -134,7 +135,7 @@ class Translation2d {
    *
    * @return The reference to the new mutated object.
    */
-  Translation2d& operator-=(const Translation2d& other);
+  Translation2d &operator-=(const Translation2d &other);
 
   /**
    * Returns the inverse of the current translation. This is equivalent to
@@ -165,7 +166,7 @@ class Translation2d {
    *
    * @return The reference to the new mutated object.
    */
-  Translation2d& operator*=(double scalar);
+  Translation2d &operator*=(double scalar);
 
   /**
    * Divides the translation by a scalar and returns the new translation.
@@ -184,7 +185,7 @@ class Translation2d {
    * @param other The other object.
    * @return Whether the two objects are equal.
    */
-  bool operator==(const Translation2d& other) const;
+  bool operator==(const Translation2d &other) const;
 
   /**
    * Checks inequality between this Translation2d and another object.
@@ -192,7 +193,7 @@ class Translation2d {
    * @param other The other object.
    * @return Whether the two objects are not equal.
    */
-  bool operator!=(const Translation2d& other) const;
+  bool operator!=(const Translation2d &other) const;
 
   /*
    * Divides the current translation by a scalar.
@@ -203,9 +204,9 @@ class Translation2d {
    *
    * @return The reference to the new mutated object.
    */
-  Translation2d& operator/=(double scalar);
+  Translation2d &operator/=(double scalar);
 
- private:
-  units::meter_t m_x = 0_m;
-  units::meter_t m_y = 0_m;
+private:
+  double m_x = 0;
+  double m_y = 0;
 };

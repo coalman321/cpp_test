@@ -4,8 +4,10 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+#define _USE_MATH_DEFINES
 
 #include "subsystems/Drivetrain.h"
+#include "cmath"
 
 Drivetrain::Drivetrain() {
     frontLeft = std::make_unique<TalonSRX>(DRIVE_FRONT_LEFT_ID);
@@ -17,7 +19,7 @@ Drivetrain::Drivetrain() {
 }
 
 void Drivetrain::readPeriodicInputs(){
-    heading = Rotation2d(units::degree_t(imu -> GetFusedHeading()));
+    heading = getRawGyroRadians().RotateBy(gyroOffset);
 }
 
 void Drivetrain::onLoop(){
@@ -87,14 +89,18 @@ void Drivetrain::reset(){
 
 }
 
-units::degree_t Drivetrain::getHeading(){
+Rotation2d Drivetrain::getRawGyroRadians(){
+    return Rotation2d((imu -> GetFusedHeading() / 180 * M_PI));
+}
+
+double Drivetrain::getHeading(){
     return heading.Degrees();
 }
 
 void Drivetrain::setHeading(Rotation2d desiredHeading){
-    printf("SET heading %d", heading.Degrees());
-    gyroOffset = desiredHeading.RotateBy(Rotation2d(units::degree_t(imu -> GetFusedHeading())).inverse());
-    printf("Gyro offset: %d", gyroOffset.Degrees());
+    printf("SET heading %f", desiredHeading.Degrees());
+    gyroOffset = desiredHeading.RotateBy(getRawGyroRadians().inverse());
+    printf("Gyro offset: %f", gyroOffset.Degrees());
     heading = desiredHeading;
 }
 

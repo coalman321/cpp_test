@@ -32,6 +32,8 @@ class Drivetrain : public Subsystem{
   DriveControlMode controlMode;
   double leftDemand = 0, rightDemand = 0;
 
+  Rotation2d getRawGyroRadians();
+
  public:
   Drivetrain();
   void readPeriodicInputs() override;
@@ -40,6 +42,6 @@ class Drivetrain : public Subsystem{
   void reset() override;
   void setOpenLoop(DriveSignal signal);
   void setVelocityControl(DriveSignal signal);
-  units::degree_t getHeading();
+  double getHeading();
   void setHeading(Rotation2d desiredHeading);
 };

@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <lib/geometry/Rotation2D.h>
 #include <lib/geometry/Twist2d.h>
 #include <lib/geometry/Translation2d.h>
 #include <lib/geometry/Transform2d.h>
@@ -38,7 +37,7 @@ class Pose2d {
    * @param y The y component of the translational component of the pose.
    * @param rotation The rotational component of the pose.
    */
-  Pose2d(units::meter_t x, units::meter_t y, Rotation2d rotation);
+  Pose2d(double x, double y, Rotation2d rotation);
 
   /**
    * Transforms the pose by the given transformation and returns the new

@@ -6,7 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <units/units.h>
+
+#include <cmath>
 
 /**
  * A change in distance along arc since the last pose update. We can use ideas
@@ -16,20 +17,31 @@
  * A Twist can be used to represent a difference between two poses.
  */
 struct Twist2d {
+
+  Twist2d(double x, double y, double dTheta){
+    dx = x;
+    dy = y;
+    dTheta = dtheta;
+  }
+
+  Twist2d(){
+    
+  }
+
   /**
    * Linear "dx" component
    */
-  units::meter_t dx = 0_m;
+  double dx = 0;
 
   /**
    * Linear "dy" component
    */
-  units::meter_t dy = 0_m;
+  double dy = 0;
 
   /**
    * Angular "dtheta" component (radians)
    */
-  units::radian_t dtheta = 0_rad;
+  double dtheta = 0;
 
   /**
    * Checks equality between this Twist2d and another object.
@@ -38,9 +50,9 @@ struct Twist2d {
    * @return Whether the two objects are equal.
    */
   bool operator==(const Twist2d& other) const {
-    return units::math::abs(dx - other.dx) < 1E-9_m &&
-           units::math::abs(dy - other.dy) < 1E-9_m &&
-           units::math::abs(dtheta - other.dtheta) < 1E-9_rad;
+    return std::abs(dx - other.dx) < 1E-9 &&
+           std::abs(dy - other.dy) < 1E-9 &&
+           std::abs(dtheta - other.dtheta) < 1E-9;
   }
 
   /**

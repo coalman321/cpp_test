@@ -5,21 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "lib/geometry/Rotation2d.h"
+#define _USE_MATH_DEFINES
 
+#include "lib/geometry/Rotation2d.h"
 #include <cmath>
 
-#include <wpi/json.h>
-
 Rotation2d::Rotation2d()
-    : m_value(0_rad),
-      m_cos(units::math::cos(0_rad)),
-      m_sin(units::math::sin(0_rad)) {}
+    : radians(0),
+      m_cos(std::cos(0)),
+      m_sin(std::sin(0)) {}
 
-Rotation2d::Rotation2d(units::radian_t value)
-    : m_value(value),
-      m_cos(units::math::cos(value)),
-      m_sin(units::math::sin(value)) {}
+Rotation2d::Rotation2d(double angle)
+    : radians(angle),
+      m_cos(std::cos(radians)),
+      m_sin(std::sin(radians)) {}
 
 Rotation2d::Rotation2d(double x, double y) {
   const auto magnitude = std::hypot(x, y);
@@ -30,7 +29,7 @@ Rotation2d::Rotation2d(double x, double y) {
     m_sin = 0.0;
     m_cos = 1.0;
   }
-  m_value = units::radian_t(std::atan2(m_sin, m_cos));
+  radians = std::atan2(m_sin, m_cos);
 }
 
 Rotation2d Rotation2d::operator+(const Rotation2d& other) const {
@@ -42,7 +41,7 @@ Rotation2d& Rotation2d::operator+=(const Rotation2d& other) {
   double sin = Cos() * other.Sin() + Sin() * other.Cos();
   m_cos = cos;
   m_sin = sin;
-  m_value = units::radian_t(std::atan2(m_sin, m_cos));
+  radians = std::atan2(m_sin, m_cos);
   return *this;
 }
 
@@ -55,14 +54,14 @@ Rotation2d& Rotation2d::operator-=(const Rotation2d& other) {
   return *this;
 }
 
-Rotation2d Rotation2d::operator-() const { return Rotation2d(-m_value); }
+Rotation2d Rotation2d::operator-() const { return Rotation2d(-radians); }
 
 Rotation2d Rotation2d::operator*(double scalar) const {
-  return Rotation2d(m_value * scalar);
+  return Rotation2d(radians * scalar);
 }
 
 bool Rotation2d::operator==(const Rotation2d& other) const {
-  return units::math::abs(m_value - other.m_value) < 1E-9_rad;
+  return std::abs(radians - other.radians) < 1E-9;
 }
 
 bool Rotation2d::operator!=(const Rotation2d& other) const {

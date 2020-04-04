@@ -7,7 +7,7 @@
 
 #pragma once
 #include <lib/control/Path.h>
-#include <lib/geometry/Twist2d.h>
+#include <lib/geometry/Pose2d.h>
 
 class PurePursuitController {
     static const double kEpsilon;
@@ -26,7 +26,7 @@ class PurePursuitController {
             bool reversed, double path_completion_tolerance);
 
   bool isDone();
-  Twist2d update();
+  Twist2d update(Pose2d robot_pose, double now);
   
 };
 
