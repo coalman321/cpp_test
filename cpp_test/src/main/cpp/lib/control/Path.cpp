@@ -8,6 +8,7 @@
 #include "lib/control/Path.h"
 #include "cmath"
 #include "cstdio"
+#include "algorithm"
 #include "lib/util/Util.h"
 
 Waypoint Waypoint::interpolate(Waypoint other, double location){
@@ -43,7 +44,7 @@ ClosestPointReport Path::getClosestPoint(Translation2d query_point){
         return ClosestPointReport();
     } 
 
-    printf("locating nearest points\n");
+    //printf("locating nearest points\n");
     //locate the two closest segments
     int nearestDefined1, nearestDefined2;
     nearestDefined1 = 0, nearestDefined2 = 1;
@@ -60,25 +61,25 @@ ClosestPointReport Path::getClosestPoint(Translation2d query_point){
         nearestDefined1--;
     }
 
-    printf("found nearest defined waypoints with list index of %d and %d\n",nearestDefined1, nearestDefined2);
+    //printf("found nearest defined waypoints with list index of %d and %d\n",nearestDefined1, nearestDefined2);
 
     //calculate distance to nearest point via dot product
     Translation2d nearestStartToEnd = waypoints.at(nearestDefined2).position - waypoints.at(nearestDefined1).position;
     Translation2d nearestStartToQuery = query_point - waypoints.at(nearestDefined1).position;
 
-    printf("Start to end X: %f Y: %f  Start to query X: %f Y: %f\n", nearestStartToEnd.X(), nearestStartToEnd.Y(),
-         nearestStartToQuery.X(), nearestStartToQuery.X());
+    //printf("Start to end X: %f Y: %f  Start to query X: %f Y: %f\n", nearestStartToEnd.X(), nearestStartToEnd.Y(),
+    //     nearestStartToQuery.X(), nearestStartToQuery.X());
 
     //get the closest point via the projection
     double dotProd = nearestStartToEnd.X() * nearestStartToQuery.X() + nearestStartToEnd.Y() * nearestStartToQuery.Y();
-    double proj = dotProd / nearestStartToEnd.Norm() / nearestStartToEnd.Norm();
+    double proj = std::clamp(dotProd / nearestStartToEnd.Norm() / nearestStartToEnd.Norm(), 0.0, 1.0);
 
-    printf("Dot prod: %f Projection: %f\n", dotProd, proj);
+    //printf("Dot prod: %f Projection: %f\n", dotProd, proj);
 
     ClosestPointReport report;
     report.closest_point = waypoints.at(nearestDefined1).position.interpolate(waypoints.at(nearestDefined2).position, proj);
     report.path_interpolant = (nearestDefined1 + proj) / ((double) waypoints.size() - 1);
-    report.distance = nearestStartToQuery.Norm(); 
+    report.distance = interpolatePath(report.path_interpolant).position.Distance(query_point); 
     return report;
 
 }
@@ -99,6 +100,8 @@ Waypoint Path::interpolatePath(double location){
     return waypoints.at(vector_index).interpolate(waypoints.at(vector_index + 1), interpolate_index);
 }
 
-Waypoint Path::getLookaheadWaypoint(Translation2d currentPathPoint, double lookahead){
-    return Waypoint(Translation2d(), 0);
+Waypoint Path::getLookaheadWaypoint(Translation2d currentPosition, double lookahead){
+    double interpolatedLookahead = lookahead / pathLength;
+    ClosestPointReport report = getClosestPoint(currentPosition);
+    return interpolatePath(report.path_interpolant + interpolatedLookahead);
 }

@@ -33,15 +33,16 @@ Twist2d PurePursuitController::update(Pose2d robot_pose, double now){
     Waypoint lookahead_point = mPath.getLookaheadWaypoint(robot_pose.Translation(),distance_from_path + mFixedLookahead);
 
     double speed = lookahead_point.speed;
-        if (mReversed) {
-            speed *= -1;
-        }
+    if (mReversed) {
+        speed *= -1;
+    }
+
     // Ensure we don't accelerate too fast from the previous command
     double dt = now - mLastTime;
     if (mLastCommand == Twist2d(0, 0, 0) && mLastTime == 0) {
         dt = mDt;
     }
-    double accel = (speed - mLastCommand.dx) / dt;
+        double accel = (speed - mLastCommand.dx) / dt;
     if (accel < -mMaxAccel) {
         speed = mLastCommand.dx - mMaxAccel * dt;
     } else if (accel > mMaxAccel) {

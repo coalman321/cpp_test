@@ -15,4 +15,9 @@ class Util {
   static double lerp(double v0, double v1, double t) {
     return (1 - t) * v0 + t * v1;
   }
+
+  template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+  }
+  
 };
