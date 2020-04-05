@@ -30,14 +30,6 @@ Path::Path(std::vector<Waypoint> waypoints) {
     }
 }
 
-double Path::getRemainingLength(){
-    return 0.0;
-}
-
-double Path::getDistanceFromPath(Translation2d current){
-    return 0.0;
-}
-
 ClosestPointReport Path::getClosestPoint(Translation2d query_point){
     if(waypoints.size() < 2){
         printf("not enough points in the path to locate a closest point\n");
@@ -98,10 +90,4 @@ Waypoint Path::interpolatePath(double location){
 
     //find the interpolated values
     return waypoints.at(vector_index).interpolate(waypoints.at(vector_index + 1), interpolate_index);
-}
-
-Waypoint Path::getLookaheadWaypoint(Translation2d currentPosition, double lookahead){
-    double interpolatedLookahead = lookahead / pathLength;
-    ClosestPointReport report = getClosestPoint(currentPosition);
-    return interpolatePath(report.path_interpolant + interpolatedLookahead);
 }

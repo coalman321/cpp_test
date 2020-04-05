@@ -21,7 +21,7 @@ struct Twist2d {
   Twist2d(double x, double y, double dTheta){
     dx = x;
     dy = y;
-    dTheta = dtheta;
+    dtheta = dTheta;
   }
 
   Twist2d(){

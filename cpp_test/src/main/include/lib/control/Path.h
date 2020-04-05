@@ -56,13 +56,14 @@ class Path {
 
  public:
   Path(std::vector<Waypoint> waypoints);
-  double getRemainingLength();
-  double getDistanceFromPath(Translation2d current);
-  Waypoint getLookaheadWaypoint(Translation2d currentPathPoint, double lookahead);
 
   // interpolate the path from start to end bounded by [0 - 1]
   Waypoint interpolatePath(double location);
 
   ClosestPointReport getClosestPoint(Translation2d query_point);
+
+  double getPathLength(){
+    return pathLength;
+  }
 
 };

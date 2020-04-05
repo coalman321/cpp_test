@@ -1,6 +1,6 @@
 
 #pragma once
-#include "lib/control/Path.h"
+#include "lib/control/PurePursuitController.h"
 #include "vector"
 #include "cstdio"
 #include "cmath"
@@ -95,7 +95,15 @@ TEST(Lookahead, LookaheadStart){
     waypoints.push_back(mid);
     waypoints.push_back(end);
     Path path = Path(waypoints);
-    Waypoint lookahead = path.getLookaheadWaypoint(Translation2d(-1, 0), 1);
+
+    double nominalDt = 0.010; //s
+    double lookaheadDist = 2.0; //u
+    double max_accel = 4; //u/s^2
+    bool reversed = false;
+    double path_completion_tolerance = 1.0; //u
+    PurePursuitController controller = PurePursuitController(lookaheadDist, max_accel, nominalDt, path, reversed, path_completion_tolerance);
+
+    Waypoint lookahead = controller.getLookaheadWaypoint(Translation2d(-1, 0), 1);
     printf("Lookahead point is at X: %f Y: %f with a SPD: %f\n", lookahead.position.X(), lookahead.position.Y(), lookahead.speed);
     ASSERT_EQ(lookahead, Waypoint(Translation2d(1,0), 11)) << "does not find correct lookahead";
 }
@@ -109,7 +117,15 @@ TEST(Lookahead, LookaheadEnd){
     waypoints.push_back(mid);
     waypoints.push_back(end);
     Path path = Path(waypoints);
-    Waypoint lookahead = path.getLookaheadWaypoint(Translation2d(10, 9.5), 1);
+
+    double nominalDt = 0.010; //s
+    double lookaheadDist = 2.0; //u
+    double max_accel = 4; //u/s^2
+    bool reversed = false;
+    double path_completion_tolerance = 1.0; //u
+    PurePursuitController controller = PurePursuitController(lookaheadDist, max_accel, nominalDt, path, reversed, path_completion_tolerance);
+
+    Waypoint lookahead = controller.getLookaheadWaypoint(Translation2d(10, 9.5), 1);
     printf("Lookahead point is at X: %f Y: %f with a SPD: %f\n", lookahead.position.X(), lookahead.position.Y(), lookahead.speed);
     ASSERT_EQ(lookahead, end) << "does not find correct lookahead";
 }
@@ -123,7 +139,15 @@ TEST(Lookahead, LookaheadMid){
     waypoints.push_back(mid);
     waypoints.push_back(end);
     Path path = Path(waypoints);
-    Waypoint lookahead = path.getLookaheadWaypoint(Translation2d(10, -1), 1);
+
+    double nominalDt = 0.010; //s
+    double lookaheadDist = 2.0; //u
+    double max_accel = 4; //u/s^2
+    bool reversed = false;
+    double path_completion_tolerance = 1.0; //u
+    PurePursuitController controller = PurePursuitController(lookaheadDist, max_accel, nominalDt, path, reversed, path_completion_tolerance);
+
+    Waypoint lookahead = controller.getLookaheadWaypoint(Translation2d(10, -1), 1);
     printf("Lookahead point is at X: %f Y: %f with a SPD: %f\n", lookahead.position.X(), lookahead.position.Y(), lookahead.speed);
     ASSERT_EQ(lookahead, Waypoint(Translation2d(10,1), 19)) << "does not find correct lookahead";
 }

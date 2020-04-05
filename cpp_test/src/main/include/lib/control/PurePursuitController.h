@@ -9,8 +9,15 @@
 #include <lib/control/Path.h>
 #include <lib/geometry/Pose2d.h>
 
+struct Circle {
+  public:
+    Translation2d center;
+    //negative radius confers turning left while a positive radius turns right. the points are colinear if radius = 0
+    double radius;
+};
+
 class PurePursuitController {
-    static const double kEpsilon;
+    static constexpr double kEpsilon = 1E-9;
 
     double mFixedLookahead;
     Path mPath;
@@ -20,14 +27,25 @@ class PurePursuitController {
     double mDt;
     bool mReversed;
     double mPathCompletionTolerance;
+    double path_remaining;
 
  public:
   PurePursuitController(double fixed_lookahead, double max_accel, double nominal_dt, Path path,
             bool reversed, double path_completion_tolerance);
 
+  //gets the current status of the controller and if it has finished tracking the path
   bool isDone();
+
+  //gets the latest command from the controller
   Twist2d update(Pose2d robot_pose, double now);
-  
+
+  //internal function for joining the current pose of the robot and the desired path point
+  Circle joinPath(Pose2d robot_pose, Translation2d lookahead_point);
+
+  Waypoint getLookaheadWaypoint(Translation2d currentPathPoint, double lookahead);
+
+  double getPathRemaining(){
+    return path_remaining;
+  }
 };
 
-const double PurePursuitController::kEpsilon = 1E-9;

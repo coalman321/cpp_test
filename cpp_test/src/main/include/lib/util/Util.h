@@ -16,8 +16,8 @@ class Util {
     return (1 - t) * v0 + t * v1;
   }
 
-  template <typename T> int sgn(T val) {
+  template <typename T>  static int sgn(T val) {
     return (T(0) < val) - (val < T(0));
   }
-  
+
 };
