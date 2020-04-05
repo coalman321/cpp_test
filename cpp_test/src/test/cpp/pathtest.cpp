@@ -79,11 +79,11 @@ TEST(ClosestPointReports, ReportInterpolatedLower){
     waypoints.push_back(mid);
     waypoints.push_back(end);
     Path path = Path(waypoints);
-    ClosestPointReport report = path.getClosestPoint(Translation2d(5, 1));
+    ClosestPointReport report = path.getClosestPoint(Translation2d(6, 1));
     printf("closest point is at X: %f Y: %f and a distance of %f with a path interpolant of %f\n", report.closest_point.X(), report.closest_point.Y(), report.distance, report.path_interpolant);
-    ASSERT_EQ(report.closest_point, Translation2d(5, 0)) << "does not find nearest point as lower interpolated";
+    ASSERT_EQ(report.closest_point, Translation2d(6, 0)) << "does not find nearest point as lower interpolated";
     ASSERT_EQ(report.distance, 1) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
-    ASSERT_EQ(report.path_interpolant, 0.25) << "path interpolant expected to be 1.0 got: " << report.path_interpolant;
+    ASSERT_EQ(report.path_interpolant, 0.3) << "path interpolant expected to be 1.0 got: " << report.path_interpolant;
 }
 
 TEST(Lookahead, LookaheadStart){
