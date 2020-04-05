@@ -22,12 +22,12 @@ class PurePursuitController {
     double mFixedLookahead;
     Path mPath;
     Twist2d mLastCommand;
-    double mLastTime;
+    double mLastTime = NAN;
     double mMaxAccel;
     double mDt;
     bool mReversed;
     double mPathCompletionTolerance;
-    double path_remaining;
+    double path_remaining = NAN;
 
  public:
   PurePursuitController(double fixed_lookahead, double max_accel, double nominal_dt, Path path,

@@ -29,12 +29,13 @@ TEST(PursuitTracking, SkewRight){
     double lookahead = 2.0; //u
     double max_accel = 4; //u/s^2
     bool reversed = false;
-    double path_completion_tolerance = 1.0; //u
+    double path_completion_tolerance = 0.01; //u
 
     PurePursuitController controller = PurePursuitController(lookahead, max_accel, nominalDt, path, reversed, path_completion_tolerance);
     Pose2d robot = Pose2d();
 
-    /*for(double t = 0; t < 3.0; t += nominalDt){
+    double t;
+    for(t = 0; t < 3.3 && !controller.isDone(); t += nominalDt){
         Twist2d update = controller.update(robot, t);
 
         //scale the update of the pose by by the friction and turn factors
@@ -44,9 +45,11 @@ TEST(PursuitTracking, SkewRight){
         //update the pose with the specified transform
         robot = robot.Exp(update);
 
-        printf("robot pose X: %f Y: %f calculated twist linear: %f angular: %f remaining path: %f\n",
-            robot.Translation().X(), robot.Translation().Y(), update.dx, update.dtheta, controller.getPathRemaining());
+        /*printf("time: %f robot pose X: %f Y: %f calculated twist linear: %f angular: %f remaining path: %f\n",
+            t, robot.Translation().X(), robot.Translation().Y(), update.dx, update.dtheta, controller.getPathRemaining());*/
     }
+    printf("Path following complete! robot stopped with a pose of X: %f Y: %f R: %f at time: %f\n",
+         robot.Translation().X(), robot.Translation().Y(), robot.Rotation().Degrees(), t);
 
-    ASSERT_EQ(robot, Pose2d(end.position, Rotation2d()));*/
+    ASSERT_TRUE(controller.isDone());
 }

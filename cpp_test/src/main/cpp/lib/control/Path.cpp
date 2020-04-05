@@ -47,26 +47,27 @@ ClosestPointReport Path::getClosestPoint(Translation2d query_point){
     }
     nearestDefined2 = nearestDefined1 + 1;
 
-    //handle case at the end where we might try to extrapolate
-    if(nearestDefined1 == waypoints.size() - 1) {
-        nearestDefined2 = nearestDefined1;
+    //handle case at the end where we might try to extrapolate or where we're closer to the next segment
+    if(nearestDefined1 == waypoints.size() - 1  || nearestDefined1 > 0 && waypoints.at(nearestDefined1 + 1).position.Distance(query_point)
+         > waypoints.at(nearestDefined1 - 1).position.Distance(query_point)) {
+        nearestDefined2--;
         nearestDefined1--;
     }
 
-    printf("found nearest defined waypoints with list index of %d and %d\n",nearestDefined1, nearestDefined2);
+    //printf("found nearest defined waypoints with list index of %d and %d\n",nearestDefined1, nearestDefined2);
 
     //calculate distance to nearest point via dot product
     Translation2d nearestStartToEnd = waypoints.at(nearestDefined2).position - waypoints.at(nearestDefined1).position;
     Translation2d nearestStartToQuery = query_point - waypoints.at(nearestDefined1).position;
 
-    printf("Start to end X: %f Y: %f  Start to query X: %f Y: %f\n", nearestStartToEnd.X(), nearestStartToEnd.Y(),
-         nearestStartToQuery.X(), nearestStartToQuery.X());
+    //printf("Start to end X: %f Y: %f  Start to query X: %f Y: %f\n", nearestStartToEnd.X(), nearestStartToEnd.Y(),
+    //     nearestStartToQuery.X(), nearestStartToQuery.X());
 
     //get the closest point via the projection
     double dotProd = nearestStartToEnd.X() * nearestStartToQuery.X() + nearestStartToEnd.Y() * nearestStartToQuery.Y();
     double proj = std::clamp(dotProd / nearestStartToEnd.Norm() / nearestStartToEnd.Norm(), 0.0, 1.0);
 
-    printf("Dot prod: %f Projection: %f\n", dotProd, proj);
+    //printf("Dot prod: %f Projection: %f\n", dotProd, proj);
 
     ClosestPointReport report;
     report.closest_point = waypoints.at(nearestDefined1).position.interpolate(waypoints.at(nearestDefined2).position, proj);

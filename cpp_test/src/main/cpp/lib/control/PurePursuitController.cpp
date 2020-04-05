@@ -29,12 +29,11 @@ Twist2d PurePursuitController::update(Pose2d robot_pose, double now){
     Circle circle = joinPath(pose, lookahead_point.position);
 
     if (isDone()) {
-        printf("Path following complete!");
         return Twist2d(0.0, 0.0, 0.0);
     }
 
-    printf("lookahead point X: %f Y: %f Path joining Circle radius: %f\n",
-        lookahead_point.position.X(), lookahead_point.position.Y(), circle.radius);
+    //printf("lookahead point X: %f Y: %f Path joining Circle radius: %f\n",
+    //    lookahead_point.position.X(), lookahead_point.position.Y(), circle.radius);
 
     double speed = lookahead_point.speed;
     if (mReversed) {
@@ -43,7 +42,7 @@ Twist2d PurePursuitController::update(Pose2d robot_pose, double now){
 
     // Ensure we don't accelerate too fast from the previous command
     double dt = now - mLastTime;
-    if (mLastCommand == Twist2d(0, 0, 0) && mLastTime == 0) {
+    if ( mLastTime == NAN) {
         dt = mDt;
     }
         double accel = (speed - mLastCommand.dx) / dt;
@@ -72,7 +71,7 @@ Twist2d PurePursuitController::update(Pose2d robot_pose, double now){
     //if the circle has a radius of zero, the points are colinear
     //otherwise there is a curvature (radius will be negative for left turns and positive for right)
     if(std::abs(circle.radius) > kEpsilon){
-        rv = Twist2d(speed, 0, std::abs(speed) / circle.radius);
+        rv = Twist2d(speed, 0, std::abs(speed) / circle.radius * -1);
     } else {
         rv = Twist2d(speed, 0, 0);
     }
@@ -117,12 +116,12 @@ Circle PurePursuitController::joinPath(Pose2d robot_pose, Translation2d lookahea
 
 bool PurePursuitController::isDone(){
     double remainingLength = getPathRemaining();
-    return remainingLength <= mPathCompletionTolerance;
+    return remainingLength != NAN && mLastTime != NAN && remainingLength <= mPathCompletionTolerance;
 }
 
 Waypoint PurePursuitController::getLookaheadWaypoint(Translation2d currentPosition, double lookahead){
     double interpolatedLookahead = lookahead / mPath.getPathLength();
     ClosestPointReport report = mPath.getClosestPoint(currentPosition);
-    path_remaining = mPath.getPathLength() - mPath.getPathLength() * (report.path_interpolant + interpolatedLookahead);
+    path_remaining = mPath.getPathLength() - mPath.getPathLength() * (report.path_interpolant);
     return mPath.interpolatePath(report.path_interpolant + interpolatedLookahead);
 }

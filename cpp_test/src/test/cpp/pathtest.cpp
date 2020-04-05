@@ -17,9 +17,9 @@ TEST(ClosestPointReports, ReportStart){
     Path path = Path(waypoints);
     ClosestPointReport report = path.getClosestPoint(Translation2d(0, 1));
     printf("closest point is at X: %f Y: %f and a distance of %f with a path interpolant of %f\n", report.closest_point.X(), report.closest_point.Y(), report.distance, report.path_interpolant);
-    ASSERT_EQ(report.closest_point, start.position) << "does not find nearest point as start";
-    ASSERT_EQ(report.distance, 1.0) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
-    ASSERT_EQ(report.path_interpolant, 0) << "path interpolant expected to be 0.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.closest_point, start.position) << "does not find nearest point as start";
+    EXPECT_EQ(report.distance, 1.0) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.path_interpolant, 0) << "path interpolant expected to be 0.0 got: " << report.path_interpolant;
 }
 
 TEST(ClosestPointReports, ReportMid){
@@ -33,9 +33,9 @@ TEST(ClosestPointReports, ReportMid){
     Path path = Path(waypoints);
     ClosestPointReport report = path.getClosestPoint(Translation2d(11, -1));
     printf("closest point is at X: %f Y: %f and a distance of %f with a path interpolant of %f\n", report.closest_point.X(), report.closest_point.Y(), report.distance, report.path_interpolant);
-    ASSERT_EQ(report.closest_point, mid.position) << "does not find nearest point as mid";
-    ASSERT_EQ(report.distance, std::sqrt(2)) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
-    ASSERT_EQ(report.path_interpolant, 0.5) << "path interpolant expected to be 0.5 got: " << report.path_interpolant;
+    EXPECT_EQ(report.closest_point, mid.position) << "does not find nearest point as mid";
+    EXPECT_EQ(report.distance, std::sqrt(2)) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.path_interpolant, 0.5) << "path interpolant expected to be 0.5 got: " << report.path_interpolant;
 }
 
 TEST(ClosestPointReports, ReportEnd){
@@ -49,9 +49,9 @@ TEST(ClosestPointReports, ReportEnd){
     Path path = Path(waypoints);
     ClosestPointReport report = path.getClosestPoint(Translation2d(11, 10));
     printf("closest point is at X: %f Y: %f and a distance of %f with a path interpolant of %f\n", report.closest_point.X(), report.closest_point.Y(), report.distance, report.path_interpolant);
-    ASSERT_EQ(report.closest_point, end.position) << "does not find nearest point as end";
-    ASSERT_EQ(report.distance, 1) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
-    ASSERT_EQ(report.path_interpolant, 1.0) << "path interpolant expected to be 1.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.closest_point, end.position) << "does not find nearest point as end";
+    EXPECT_EQ(report.distance, 1) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.path_interpolant, 1.0) << "path interpolant expected to be 1.0 got: " << report.path_interpolant;
 }
 
 TEST(ClosestPointReports, ReportInterpolatedUpper){
@@ -65,9 +65,9 @@ TEST(ClosestPointReports, ReportInterpolatedUpper){
     Path path = Path(waypoints);
     ClosestPointReport report = path.getClosestPoint(Translation2d(11, 5));
     printf("closest point is at X: %f Y: %f and a distance of %f with a path interpolant of %f\n", report.closest_point.X(), report.closest_point.Y(), report.distance, report.path_interpolant);
-    ASSERT_EQ(report.closest_point, Translation2d(10, 5)) << "does not find nearest point as upper interpolated";
-    ASSERT_EQ(report.distance, 1) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
-    ASSERT_EQ(report.path_interpolant, 0.75) << "path interpolant expected to be 1.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.closest_point, Translation2d(10, 5)) << "does not find nearest point as upper interpolated";
+    EXPECT_EQ(report.distance, 1) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.path_interpolant, 0.75) << "path interpolant expected to be 1.0 got: " << report.path_interpolant;
 }
 
 TEST(ClosestPointReports, ReportInterpolatedLower){
@@ -81,9 +81,9 @@ TEST(ClosestPointReports, ReportInterpolatedLower){
     Path path = Path(waypoints);
     ClosestPointReport report = path.getClosestPoint(Translation2d(6, 1));
     printf("closest point is at X: %f Y: %f and a distance of %f with a path interpolant of %f\n", report.closest_point.X(), report.closest_point.Y(), report.distance, report.path_interpolant);
-    ASSERT_EQ(report.closest_point, Translation2d(6, 0)) << "does not find nearest point as lower interpolated";
-    ASSERT_EQ(report.distance, 1) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
-    ASSERT_EQ(report.path_interpolant, 0.3) << "path interpolant expected to be 1.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.closest_point, Translation2d(6, 0)) << "does not find nearest point as lower interpolated";
+    EXPECT_EQ(report.distance, 1) << "incorrect distance from nearest point expected 1.0 got: " << report.path_interpolant;
+    EXPECT_EQ(report.path_interpolant, 0.3) << "path interpolant expected to be 1.0 got: " << report.path_interpolant;
 }
 
 TEST(Lookahead, LookaheadStart){
@@ -105,7 +105,7 @@ TEST(Lookahead, LookaheadStart){
 
     Waypoint lookahead = controller.getLookaheadWaypoint(Translation2d(-1, 0), 1);
     printf("Lookahead point is at X: %f Y: %f with a SPD: %f\n", lookahead.position.X(), lookahead.position.Y(), lookahead.speed);
-    ASSERT_EQ(lookahead, Waypoint(Translation2d(1,0), 11)) << "does not find correct lookahead";
+    EXPECT_EQ(lookahead, Waypoint(Translation2d(1,0), 11)) << "does not find correct lookahead";
 }
 
 TEST(Lookahead, LookaheadEnd){
@@ -127,7 +127,7 @@ TEST(Lookahead, LookaheadEnd){
 
     Waypoint lookahead = controller.getLookaheadWaypoint(Translation2d(10, 9.5), 1);
     printf("Lookahead point is at X: %f Y: %f with a SPD: %f\n", lookahead.position.X(), lookahead.position.Y(), lookahead.speed);
-    ASSERT_EQ(lookahead, end) << "does not find correct lookahead";
+    EXPECT_EQ(lookahead, end) << "does not find correct lookahead";
 }
 
 TEST(Lookahead, LookaheadMid){
@@ -149,5 +149,5 @@ TEST(Lookahead, LookaheadMid){
 
     Waypoint lookahead = controller.getLookaheadWaypoint(Translation2d(10, -1), 1);
     printf("Lookahead point is at X: %f Y: %f with a SPD: %f\n", lookahead.position.X(), lookahead.position.Y(), lookahead.speed);
-    ASSERT_EQ(lookahead, Waypoint(Translation2d(10,1), 19)) << "does not find correct lookahead";
+    EXPECT_EQ(lookahead, Waypoint(Translation2d(10,1), 19)) << "does not find correct lookahead";
 }
