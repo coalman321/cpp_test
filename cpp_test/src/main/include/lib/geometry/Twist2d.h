@@ -8,6 +8,7 @@
 #pragma once
 
 #include <cmath>
+#include <lib/util/CSVWritable.h>
 
 /**
  * A change in distance along arc since the last pose update. We can use ideas
@@ -16,7 +17,7 @@
  *
  * A Twist can be used to represent a difference between two poses.
  */
-struct Twist2d {
+struct Twist2d : public CSVWritable{
 
   Twist2d(double x, double y, double dTheta){
     dx = x;
@@ -62,5 +63,14 @@ struct Twist2d {
    * @return Whether the two objects are not equal.
    */
   bool operator!=(const Twist2d& other) const { return !operator==(other); }
+
+  int getNumFields() const{
+    return 3;
+  }
+
+  std::string toCSV(){
+    return std::to_string(dx) + ", " + std::to_string(dy) + ", " + std::to_string(dtheta);
+  }
+
 };
 

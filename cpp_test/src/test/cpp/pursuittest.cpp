@@ -45,11 +45,10 @@ TEST(PursuitTracking, SkewRight){
         //update the pose with the specified transform
         robot = robot.Exp(update);
 
-        /*printf("time: %f robot pose X: %f Y: %f calculated twist linear: %f angular: %f remaining path: %f\n",
-            t, robot.Translation().X(), robot.Translation().Y(), update.dx, update.dtheta, controller.getPathRemaining());*/
+        /*printf("time: %f robot pose: %s calculated twist linear: %f angular: %f remaining path: %f\n",
+            t, robot.toCSV().c_str(), update.dx, update.dtheta, controller.getPathRemaining());*/
     }
-    printf("Path following complete! robot stopped with a pose of X: %f Y: %f R: %f at time: %f\n",
-         robot.Translation().X(), robot.Translation().Y(), robot.Rotation().Degrees(), t);
+    printf("Path following complete! robot stopped with a pose of %s at time: %f\n", robot.toCSV().c_str(), t);
 
     ASSERT_TRUE(controller.isDone());
 }

@@ -15,7 +15,7 @@ class Pose2d;
 /**
  * Represents a transformation for a Pose2d.
  */
-class Transform2d {
+class Transform2d :public CSVWritable{
  public:
   /**
    * Constructs the transform that maps the initial pose to the final pose.
@@ -84,6 +84,14 @@ class Transform2d {
    * @return Whether the two objects are not equal.
    */
   bool operator!=(const Transform2d& other) const;
+
+  int getNumFields(){
+    return m_translation.getNumFields() + m_rotation.getNumFields();
+  }
+
+  std::string toCSV(){
+    return m_translation.toCSV() + ", " + m_rotation.toCSV();
+  }
 
  private:
   Translation2d m_translation;

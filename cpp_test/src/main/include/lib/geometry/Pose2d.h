@@ -13,7 +13,7 @@
 /**
  * Represents a 2d pose containing translational and rotational elements.
  */
-class Pose2d {
+class Pose2d : public CSVWritable{
  public:
   /**
    * Constructs a pose at the origin facing toward the positive X axis.
@@ -159,6 +159,14 @@ class Pose2d {
    * @return The twist that maps this to end.
    */
   Twist2d Log(const Pose2d& end) const;
+
+  int getNumFields(){
+    return m_translation.getNumFields() + m_rotation.getNumFields();
+  }
+
+  std::string toCSV(){
+    return m_translation.toCSV() + ", " + m_rotation.toCSV();
+  }
 
  private:
   Translation2d m_translation;

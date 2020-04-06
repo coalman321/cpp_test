@@ -17,8 +17,7 @@
  * When the robot is placed on the origin, facing toward the X direction,
  * moving forward increases the X, whereas moving to the left increases the Y.
  */
-class Translation2d
-{
+class Translation2d : public CSVWritable {
 public:
   /**
    * Constructs a Translation2d with X and Y components equal to zero.
@@ -205,6 +204,14 @@ public:
    * @return The reference to the new mutated object.
    */
   Translation2d &operator/=(double scalar);
+
+  int getNumFields(){
+    return 2;
+  }
+
+  std::string toCSV(){
+    return std::to_string(m_x) + ", " + std::to_string(m_y);
+  }
 
 private:
   double m_x = 0;
