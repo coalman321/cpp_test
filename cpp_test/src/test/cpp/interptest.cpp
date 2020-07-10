@@ -9,19 +9,19 @@
 TEST(LinearInterpTest, InterpolateStart){
     double start = 10, end = 20;
     double interpolated = Util::lerp(start, end, 0);
-    printf("linear interpolation from 10 to 20 when iterpolation index is 0: %f\n", interpolated);
+    //printf("linear interpolation from 10 to 20 when iterpolation index is 0: %f\n", interpolated);
     ASSERT_EQ(interpolated, start) << "linear interpolation failed. expected: " << start << " got: " << interpolated;
 }
 TEST(LinearInterpTest, InterpolateMid){
     double start = 10, end = 20, mid = 15;
     double interpolated = Util::lerp(start, end, 0.5);
-    printf("linear interpolation from 10 to 20 when iterpolation index is 0.5: %f\n", interpolated);
+    //printf("linear interpolation from 10 to 20 when iterpolation index is 0.5: %f\n", interpolated);
     ASSERT_EQ(interpolated, mid) << "linear interpolation failed. expected: " << mid << " got: " << interpolated;
 }
 TEST(LinearInterpTest, InterpolateEnd){
     double start = 10, end = 20;
     double interpolated = Util::lerp(start, end, 1);
-    printf("linear interpolation from 10 to 20 when iterpolation index is 1: %f\n", interpolated);
+    //printf("linear interpolation from 10 to 20 when iterpolation index is 1: %f\n", interpolated);
     ASSERT_EQ(interpolated, end) << "linear interpolation failed. expected: " << end << " got: " << interpolated;
 }
 
@@ -29,9 +29,9 @@ TEST(WaypointTest, InterpolateLow){
     Waypoint first = Waypoint(Translation2d(0,0), 10);
     Waypoint second = Waypoint(Translation2d(10,0), 20);
     Waypoint interp = first.interpolate(second, 0);
-    printf("interpolating between X: %f Y: %f SPD: %f and X: %f Y: %f SPD: %f at index 0 got X: %f Y: %f SPD: %f\n",
+    /*printf("interpolating between X: %f Y: %f SPD: %f and X: %f Y: %f SPD: %f at index 0 got X: %f Y: %f SPD: %f\n",
         first.position.X(), first.position.Y(), first.speed, second.position.X(), second.position.Y(), second.speed,
-        interp.position.X(), interp.position.Y(), interp.speed);
+        interp.position.X(), interp.position.Y(), interp.speed);*/
     ASSERT_EQ(interp, first) << "start boundary interpolated waypoint is not start waypoint";
 }
 
@@ -39,9 +39,9 @@ TEST(WaypointTest, InterpolateHigh){
     Waypoint first = Waypoint(Translation2d(0,0), 10);
     Waypoint second = Waypoint(Translation2d(10,0), 20);
     Waypoint interp = first.interpolate(second, 1);
-    printf("interpolating between X: %f Y: %f SPD: %f and X: %f Y: %f SPD: %f at index 1 got X: %f Y: %f SPD: %f\n",
+    /*printf("interpolating between X: %f Y: %f SPD: %f and X: %f Y: %f SPD: %f at index 1 got X: %f Y: %f SPD: %f\n",
         first.position.X(), first.position.Y(), first.speed, second.position.X(), second.position.Y(), second.speed,
-        interp.position.X(), interp.position.Y(), interp.speed);
+        interp.position.X(), interp.position.Y(), interp.speed);*/
     ASSERT_EQ(interp, second) << "end boundary interpolated waypoint is not end waypoint";
 }
 
@@ -49,9 +49,9 @@ TEST(WaypointTest, InterpolateCenter){
     Waypoint first = Waypoint(Translation2d(0,10), 10);
     Waypoint second = Waypoint(Translation2d(10,0), 20);
     Waypoint interp = first.interpolate(second, 0.5);
-    printf("interpolating between X: %f Y: %f SPD: %f and X: %f Y: %f SPD: %f at index 0.5 got X: %f Y: %f SPD: %f\n",
+    /*printf("interpolating between X: %f Y: %f SPD: %f and X: %f Y: %f SPD: %f at index 0.5 got X: %f Y: %f SPD: %f\n",
         first.position.X(), first.position.Y(), first.speed, second.position.X(), second.position.Y(), second.speed,
-        interp.position.X(), interp.position.Y(), interp.speed);
+        interp.position.X(), interp.position.Y(), interp.speed);*/
     ASSERT_EQ(Waypoint(Translation2d(5,5), 15), interp) << "Center interpolated waypoint is not equal to calculated center";
 }
 

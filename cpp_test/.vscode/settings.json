@@ -59,5 +59,6 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "atomic": "cpp"
-    }
+    },
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
