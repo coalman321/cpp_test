@@ -8,7 +8,7 @@
 #define DRIVE_FRONT_RIGHT_ID 2
 #define DRIVE_REAR_LEFT_ID 3
 #define DRIVE_REAR_RIGHT_ID 4
-#define DRIVE_PIGEON_ID 5
+#define DRIVE_PIGEON_ID 1
 
 // Drivetrain constants
 #define DRIVE_HEADING_KP 0.00

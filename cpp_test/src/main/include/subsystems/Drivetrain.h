@@ -15,6 +15,8 @@
 #include <Constants.h>
 #include <lib/geometry/Rotation2D.h>
 #include <lib/control/SynchronousPIDF.h>
+#include <frc/RobotState.h>
+#include <frc/joystick.h>
 
 enum DriveControlMode{OPEN_LOOP, PATH_FOLLOWING, HEADING_CONTROL, POSE_STABILIZE};
 
